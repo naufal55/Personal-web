@@ -1,0 +1,16 @@
+{
+  "name": "day-8",
+  "version": "1.0.0",
+  "description": "8th day of daily tasks",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon node index.js"
+  },
+  "author": "Muhammad Naufal",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "hbs": "^4.2.0",
+    "nodemon": "^2.0.15"
+  }
+}
