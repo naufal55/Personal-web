@@ -43,10 +43,21 @@ handlebars.registerHelper('tgllengkap', function (date) {
 app.use(express.urlencoded({extended: false}))// ENCODE DATA YANG ADA DI req.body (request.body) agar BISA DIAMBIL ISI OBJECTNYA
 
 app.get('/', function(req, res) {
-    console.log(req.session);
+    console.log('ini isi dari session',req.session);
 
-    const query = `SELECT tb_projects.id, tb_projects.author_id, tb_user.name as author, tb_user.email, tb_projects.name, tb_projects.start_date, tb_projects.end_date, tb_projects.description, tb_projects.technologies, tb_projects.image
-	FROM tb_projects LEFT JOIN tb_user ON tb_projects.author_id = tb_user.id`
+    let query;
+    let idSess;
+
+    if (req.session.isLogin) {
+        idSess = req.session.author_id
+        query = `SELECT tb_projects.id, tb_projects.author_id, tb_user.name as author, tb_user.email, tb_projects.name, tb_projects.start_date, tb_projects.end_date, tb_projects.description, tb_projects.technologies, tb_projects.image
+        FROM tb_projects LEFT JOIN tb_user ON tb_projects.author_id = tb_user.id WHERE tb_projects.author_id=${idSess}`        
+    }else{
+        query = `SELECT tb_projects.id, tb_projects.author_id, tb_user.name as author, tb_user.email, tb_projects.name, tb_projects.start_date, tb_projects.end_date, tb_projects.description, tb_projects.technologies, tb_projects.image
+        FROM tb_projects LEFT JOIN tb_user ON tb_projects.author_id = tb_user.id`        
+    }
+
+    
     db.connect(function(err, client, done) {
         if (err) throw err // kondisi untuk menampilkan error koneksi database
 
