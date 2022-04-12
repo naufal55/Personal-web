@@ -49,15 +49,13 @@ app.get('/', function(req, res) {
     let idSess;
 
     if (req.session.isLogin) {
-        idSess = req.session.author_id
+        idSess = req.session.user.id
         query = `SELECT tb_projects.id, tb_projects.author_id, tb_user.name as author, tb_user.email, tb_projects.name, tb_projects.start_date, tb_projects.end_date, tb_projects.description, tb_projects.technologies, tb_projects.image
         FROM tb_projects LEFT JOIN tb_user ON tb_projects.author_id = tb_user.id WHERE tb_projects.author_id=${idSess}`        
     }else{
         query = `SELECT tb_projects.id, tb_projects.author_id, tb_user.name as author, tb_user.email, tb_projects.name, tb_projects.start_date, tb_projects.end_date, tb_projects.description, tb_projects.technologies, tb_projects.image
         FROM tb_projects LEFT JOIN tb_user ON tb_projects.author_id = tb_user.id`        
     }
-
-    
     db.connect(function(err, client, done) {
         if (err) throw err // kondisi untuk menampilkan error koneksi database
 
@@ -120,6 +118,7 @@ app.get('/detail-project/:id', function(req, res) {
 
    
 })
+
 
 app.post('/add-project',upload.single('inputImage'), function(req, res) {
 
@@ -213,7 +212,7 @@ app.post('/login', function(req, res) {
 
             if(result.rows.length == 0){
                 //  console.log('Email belum terdaftar!!');
-                req.flash('danger', 'Email belum terdaftar, Silahkan daftar!')
+                req.flash('danger', 'Email belum terdaftar!!')
 
                 return res.redirect('/login') // berpindah halaman ke route /blog
             } 
@@ -242,7 +241,6 @@ app.post('/login', function(req, res) {
     
 
 })
-
 app.post('/register', function(req, res) {
     
     const {inputan} = req.body // destruct property to new variabel
@@ -258,7 +256,7 @@ app.post('/register', function(req, res) {
             if (err) throw err // kondisi untuk menampilkan error query 
             done() 
             
-            res.redirect('/login') 
+            res.redirect('/') 
         })
         
     })
@@ -284,13 +282,11 @@ app.get('/delete-project/:id', function(req, res) {
         })
     })
 })
-
 app.get('/logout', function(req, res){
     req.session.destroy()
 
     res.redirect('/')
 })
-
 app.get('/update/:id', function(req, res) {
     let id = req.params.id      
     if(!req.session.isLogin){
@@ -304,7 +300,6 @@ app.get('/update/:id', function(req, res) {
         user:req.session.user,
     })
 })
-
 app.get('/add-project', function(req, res) {
     if(!req.session.isLogin){
         req.flash('danger', 'Page not found, Please login !')
@@ -316,22 +311,18 @@ app.get('/add-project', function(req, res) {
         user:req.session.user,
     })
 })
-
 app.get('/register', function(req, res) {
     res.render('register')
 })
-
 app.get('/login', function(req, res) {
     res.render('login')
 })
-
 app.get('/contact', function(req, res) {
     res.render('contact',{
         isLogin: req.session.isLogin,
         user:req.session.user
     })
 })
-
 app.listen(port, function(){
     console.log(`Server listen on port ${port}`);
 })
