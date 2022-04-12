@@ -121,7 +121,6 @@ app.get('/detail-project/:id', function(req, res) {
    
 })
 
-
 app.post('/add-project',upload.single('inputImage'), function(req, res) {
 
     let data = req.body
@@ -214,7 +213,7 @@ app.post('/login', function(req, res) {
 
             if(result.rows.length == 0){
                 //  console.log('Email belum terdaftar!!');
-                req.flash('danger', 'Email belum terdaftar!!')
+                req.flash('danger', 'Email belum terdaftar, Silahkan daftar!')
 
                 return res.redirect('/login') // berpindah halaman ke route /blog
             } 
@@ -243,6 +242,7 @@ app.post('/login', function(req, res) {
     
 
 })
+
 app.post('/register', function(req, res) {
     
     const {inputan} = req.body // destruct property to new variabel
@@ -258,7 +258,7 @@ app.post('/register', function(req, res) {
             if (err) throw err // kondisi untuk menampilkan error query 
             done() 
             
-            res.redirect('/') 
+            res.redirect('/login') 
         })
         
     })
@@ -284,11 +284,13 @@ app.get('/delete-project/:id', function(req, res) {
         })
     })
 })
+
 app.get('/logout', function(req, res){
     req.session.destroy()
 
     res.redirect('/')
 })
+
 app.get('/update/:id', function(req, res) {
     let id = req.params.id      
     if(!req.session.isLogin){
@@ -302,6 +304,7 @@ app.get('/update/:id', function(req, res) {
         user:req.session.user,
     })
 })
+
 app.get('/add-project', function(req, res) {
     if(!req.session.isLogin){
         req.flash('danger', 'Page not found, Please login !')
@@ -313,18 +316,22 @@ app.get('/add-project', function(req, res) {
         user:req.session.user,
     })
 })
+
 app.get('/register', function(req, res) {
     res.render('register')
 })
+
 app.get('/login', function(req, res) {
     res.render('login')
 })
+
 app.get('/contact', function(req, res) {
     res.render('contact',{
         isLogin: req.session.isLogin,
         user:req.session.user
     })
 })
+
 app.listen(port, function(){
     console.log(`Server listen on port ${port}`);
 })
