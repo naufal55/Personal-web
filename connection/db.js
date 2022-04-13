@@ -20,10 +20,15 @@ if (isProduction) {
 } else {
 
     dbPool = new Pool({
-        database: 'db-personal-web',
+        database: 'dbih98uphj7mcb',
         port: 5432,
-        user: 'postgres',
-        password: '1234'
+        user: 'hxpnzjtxlqsgzh',
+        password: '53278b5bdbf4db0430835bbfb9730fa9dfd348d036cc3a2ca4ccfbcb8885cc0a'
+
+        // database: 'db-personal-web',
+        // port: 5432,
+        // user: 'postgres',
+        // password: '1234'
     })
 
 }
