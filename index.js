@@ -150,7 +150,7 @@ app.post('/add-project',upload.single('inputImage'), function(req, res) {
         client.query(query, function(err, result) {
             if (err) throw err // kondisi untuk menampilkan error query 
             done() 
-            
+            console.log(result);
             res.redirect('/')
         })
 
