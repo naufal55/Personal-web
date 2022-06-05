@@ -1,2 +1,2 @@
 # Personal Web
-Personal web using js stack
+Personal web using js fullstack
