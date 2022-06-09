@@ -1,4 +1,4 @@
 # Personal Web
 Personal web using js fullstack
 
-(Go to branch day-11 for web preview)
+link : https://personal-web-mnaufal.herokuapp.com/
